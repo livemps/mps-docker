@@ -2,7 +2,7 @@
 # --- Makefile Setup ---#
 .ONESHELL:
 default: install
-.PHONY: default help install uninstall status
+.PHONY: default help install uninstall status yay
 # --- MPS Setup ---#
 MPSUSER :=mps
 PAC_PACKAGES := sudo wget base-devel lsb-release
