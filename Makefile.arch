@@ -2,7 +2,7 @@
 # --- Makefile Setup ---#
 .ONESHELL:
 default: install
-.PHONY: default help install uninstall status yay
+.PHONY: default help install uninstall status
 # --- MPS Setup ---#
 MPSUSER :=mps
 PAC_PACKAGES := sudo wget base-devel lsb-release community/go
@@ -22,18 +22,13 @@ help:
 	@echo "  Example: make install"
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
-user:
-	@sudo useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
-	@echo '$(MPSUSER):$(MPSUSER)' | sudo tee -a chpasswd
-	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
-yay:
-	@echo "Yes" | sudo pacman --noconfirm -S community/go
-	@git clone https://aur.archlinux.org/yay.git && cd yay && echo "Yes" | makepkg -si
-
 install: user 
 	@echo "Yes" | sudo pacman --noconfirm -Syy \
 		&& echo "Yes" | sudo pacman --noconfirm -Syu \
     	&& echo "Yes" | sudo pacman --noconfirm -S $(PAC_PACKAGES)
+	@sudo useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
+	@echo '$(MPSUSER):$(MPSUSER)' | sudo tee -a chpasswd
+	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 uninstall: 
 	@echo "No uninstaller"
 status: 
