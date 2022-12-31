@@ -23,10 +23,10 @@ help:
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 install: 
-	apt update --yes &&  apt upgrade --yes \
-    && apt install --yes $(APT_PACKAGES)
-	useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
-	adduser mps sudo
+	sudo apt update --yes &&  sudo apt upgrade --yes \
+    && sudo apt install --yes $(APT_PACKAGES)
+	sudo useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
+	sudo adduser mps sudo
 	echo '$(MPSUSER):$(MPSUSER)' | chpasswd
 	echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 uninstall: 

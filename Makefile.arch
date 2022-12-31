@@ -23,9 +23,9 @@ help:
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 install: 
-	@echo "Yes" | pacman --noconfirm -Syy \
-		&& echo "Yes" | pacman --noconfirm -Syu \
-    	&& echo "Yes" | pacman --noconfirm -S $(PAC_PACKAGES)
+	@echo "Yes" | sudo pacman --noconfirm -Syy \
+		&& echo "Yes" | sudo pacman --noconfirm -Syu \
+    	&& echo "Yes" | sudo pacman --noconfirm -S $(PAC_PACKAGES)
 	@useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
 	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
 	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers

@@ -17,9 +17,9 @@ else
 endif
 # --- Test root user
 usertest:
-ifneq ($(SETUPUSER),0)
-	$(error No Privileges! Please start as root)
-endif
+# ifneq ($(SETUPUSER),0)
+# 	$(error No Privileges! Please start as root)
+# endif
 # --- Test distro
 distrotest:
 ifeq ($(MKEXT),none)
