@@ -8,7 +8,7 @@ DISTROTEST_DEBIAN := $(shell lsb_release -is)
 DISTROTEST_ARCH := $(shell lsb_release -is)
 SETUPUSER := $(shell id -u)
 # --- Check Distro (Auto)
-ifeq ($(DISTROTEST_DEBIAN),Arch)
+ifeq ($(DISTROTEST_ARCH),Arch)
 	MKEXT :=arch
 else ifeq ($(DISTROTEST_DEBIAN),Debian)
 	MKEXT :=debian
