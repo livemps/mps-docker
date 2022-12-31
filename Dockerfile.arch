@@ -4,7 +4,7 @@ RUN echo "Yes" | pacman --noconfirm -S git base-devel lsb-release
 RUN mkdir -p /mps/mps-docker
 RUN git clone https://github.com/livemps/mps-docker /mps/mps-docker
 RUN chmod a+rw -R /mps
-RUN cd /mps/mps-docker && git pull && make DISTRO=arch install
+RUN cd /mps/mps-docker && git pull && make install
 USER mps
 WORKDIR /home/mps
 ENTRYPOINT ["/bin/bash"]
