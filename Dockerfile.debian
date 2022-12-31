@@ -1,10 +1,10 @@
 FROM debian
-RUN apt update --yes && apt upgrade --yes
-RUN apt install --yes git build-essential lsb-release
-RUN mkdir -p /mps
-RUN git clone https://github.com/livemps/mps-docker /mps/mps-docker
-RUN cd /mps/mps-docker && git config pull.ff only && git pull && make install
-RUN chmod a+rw -R /mps
+RUN apt update --yes && apt upgrade --yes \
+    && apt install --yes git build-essential lsb-release \
+    && mkdir -p /mps \
+    && git clone https://github.com/livemps/mps-docker /mps/mps-docker \
+    && cd /mps/mps-docker && git config pull.ff only && git pull && make install \
+    && chmod a+rw -R /mps
 USER mps
 WORKDIR /home/mps
 ENTRYPOINT ["/bin/bash"]
