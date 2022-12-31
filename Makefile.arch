@@ -27,7 +27,6 @@ install:
 		&& echo "Yes" | pacman --noconfirm -Syu \
     	&& echo "Yes" | pacman --noconfirm -S $(PAC_PACKAGES)
 	@useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
-	@adduser mps sudo
 	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
 	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 uninstall: 
