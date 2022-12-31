@@ -23,13 +23,13 @@ help:
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 install: 
-	echo "Yes" | pacman --noconfirm -Syy \
+	@echo "Yes" | pacman --noconfirm -Syy \
 		&& echo "Yes" | pacman --noconfirm -Syu \
     	&& echo "Yes" | pacman --noconfirm -S $(PAC_PACKAGES)
-	useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
-	adduser mps sudo
-	echo '$(MPSUSER):$(MPSUSER)' | chpasswd
-	echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+	@useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
+	@adduser mps sudo
+	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
+	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 uninstall: 
 	@echo "No uninstaller"
 status: 
