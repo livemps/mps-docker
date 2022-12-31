@@ -1,7 +1,11 @@
 # +++++ Configuration +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 # --- Makefile Setup ---#
-default: help
-.PHONY: default elp install uninstall status
+.ONESHELL:
+default: install
+.PHONY: default help install uninstall status
+# --- MPS Setup ---#
+MPSUSER :=mps
+APT_PACKAGES := sudo wget build-essential libncurses-dev
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 help:
 	@echo ""
@@ -17,10 +21,15 @@ help:
 	@echo ""
 	@echo "  Example: make install"
 	@echo ""
-# +++++ Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-install:
-	@echo "Installing vim"
+# +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
+install: 
+	apt update --yes &&  apt upgrade --yes \
+    && apt install --yes $(APT_PACKAGES)
+	useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
+	adduser mps sudo
+	echo '$(MPSUSER):$(MPSUSER)' | chpasswd
+	echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 uninstall: 
-	@echo "Uninstalling vim"
+	@echo "No uninstaller"
 status: 
-	@echo "Status vim"
+	@echo "No status"

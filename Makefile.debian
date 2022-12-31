@@ -3,7 +3,7 @@
 .ONESHELL:
 default: install
 .PHONY: default help install uninstall status
-# --- Makefile Setup ---#
+# --- MPS Setup ---#
 MPSUSER :=mps
 APT_PACKAGES := sudo wget build-essential libncurses-dev
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
@@ -21,11 +21,6 @@ help:
 	@echo ""
 	@echo "  Example: make install"
 	@echo ""
-# +++++ Check Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-distrotest:
-ifneq ($(shell id,u),0)
-	$(error No Privileges! Please start as root)
-endif
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 install: 
 	apt update --yes &&  apt upgrade --yes \
