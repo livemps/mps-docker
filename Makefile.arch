@@ -22,7 +22,7 @@ help:
 	@echo "  Example: make install"
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
-install: user 
+install: 
 	@echo "Yes" | sudo pacman --noconfirm -Syy \
 		&& echo "Yes" | sudo pacman --noconfirm -Syu \
     	&& echo "Yes" | sudo pacman --noconfirm -S $(PAC_PACKAGES)
