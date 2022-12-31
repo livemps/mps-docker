@@ -28,7 +28,7 @@ user:
 	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 yay:
 	@echo "Yes" | sudo pacman --noconfirm -S community/go
-	@git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+	@git clone https://aur.archlinux.org/yay.git && cd yay && echo "Yes" | makepkg -si
 
 install: user 
 	@echo "Yes" | sudo pacman --noconfirm -Syy \
