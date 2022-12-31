@@ -22,14 +22,17 @@ help:
 	@echo "  Example: make install"
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
-install: 
-	@echo "Yes" | sudo pacman --noconfirm -Syy \
-		&& echo "Yes" | sudo pacman --noconfirm -Syu \
-    	&& echo "Yes" | sudo pacman --noconfirm -S $(PAC_PACKAGES)
+user:
 	@useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
 	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
 	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+yay:
 	@git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+install: user 
+	@echo "Yes" | sudo pacman --noconfirm -Syy \
+		&& echo "Yes" | sudo pacman --noconfirm -Syu \
+    	&& echo "Yes" | sudo pacman --noconfirm -S $(PAC_PACKAGES)
 uninstall: 
 	@echo "No uninstaller"
 status: 

@@ -7,4 +7,5 @@ RUN chmod a+rw -R /mps
 RUN cd /mps/mps-docker && git config pull.ff only && git pull && make install
 USER mps
 WORKDIR /home/mps
+RUN cd /mps/mps-docker && sudo -u mps -i make yay
 ENTRYPOINT ["/bin/bash"]
