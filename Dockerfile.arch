@@ -1,10 +1,10 @@
 FROM archlinux
-RUN echo "Yes" | pacman --noconfirm -Syy && wcho "Yes" | pacman --noconfirm -Syu
-RUN echo "Yes" | pacman --noconfirm -S git base-devel lsb-release
-RUN mkdir -p /mps/mps-docker
-RUN git clone https://github.com/livemps/mps-docker /mps/mps-docker
-RUN chmod a+rw -R /mps
-RUN cd /mps/mps-docker && git config pull.ff only && git pull && make install
+RUN echo "Yes" | pacman --noconfirm -Syy && wcho "Yes" | pacman --noconfirm -Syu \
+    && echo "Yes" | pacman --noconfirm -S git base-devel lsb-release \
+    && mkdir -p /mps/mps-docker \
+    && git clone https://github.com/livemps/mps-docker /mps/mps-docker \
+    && chmod a+rw -R /mps \
+    && cd /mps/mps-docker && git config pull.ff only && git pull && make install
 USER mps
 WORKDIR /home/mps
 RUN cd /mps/ && git clone https://aur.archlinux.org/yay.git && cd yay && echo "Yes" | makepkg -si
