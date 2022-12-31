@@ -27,8 +27,8 @@ install:
     && sudo apt install --yes $(APT_PACKAGES)
 	sudo useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
 	sudo adduser mps sudo
-	echo '$(MPSUSER):$(MPSUSER)' | chpasswd
-	echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+	echo '$(MPSUSER):$(MPSUSER)' | sudo chpasswd
+	echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 uninstall: 
 	@echo "No uninstaller"
 status: 

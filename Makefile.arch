@@ -23,9 +23,9 @@ help:
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 user:
-	@useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
-	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
-	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+	@sudo useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
+	@echo '$(MPSUSER):$(MPSUSER)' | sudo tee -a chpasswd
+	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 yay:
 	@echo "Yes" | sudo pacman --noconfirm -S community/go
 	@git clone https://aur.archlinux.org/yay.git && cd yay && echo "Yes" | makepkg -si
