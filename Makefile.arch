@@ -29,6 +29,7 @@ install:
 	@useradd -m -d /home/$(MPSUSER) -s /bin/bash $(MPSUSER) 
 	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
 	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+	@git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 uninstall: 
 	@echo "No uninstaller"
 status: 
