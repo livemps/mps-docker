@@ -5,7 +5,7 @@ default: install
 .PHONY: default help install uninstall status
 # --- MPS Setup ---#
 MPSUSER :=mps
-APT_PACKAGES := sudo wget build-essential libncurses-dev
+PAC_PACKAGES := sudo wget base-devel 
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 help:
 	@echo ""
@@ -23,8 +23,9 @@ help:
 	@echo ""
 # +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 install: 
-	apt update --yes &&  apt upgrade --yes \
-    && apt install --yes $(APT_PACKAGES)
+	echo "Yes" | pacman --noconfirm -Syy \
+		&& echo "Yes" | pacman --noconfirm -Syu \
+    	&& echo "Yes" | pacman --noconfirm -S $(PAC_PACKAGES)
 	useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
 	adduser mps sudo
 	echo '$(MPSUSER):$(MPSUSER)' | chpasswd
@@ -33,3 +34,4 @@ uninstall:
 	@echo "No uninstaller"
 status: 
 	@echo "No status"
+
