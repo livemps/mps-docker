@@ -18,15 +18,15 @@ else ifeq ($(DISTRO),debian)
 	MKEXT :=debian
 else
 # --- Check Distro (Auto)
-ifeq ($(DISTROTEST_DEBIAN),Arch)
-	MKAUTOEXT :=1
-	MKEXT :=arch
-ifeq ($(DISTROTEST_DEBIAN),Debian)
-	MKAUTOEXT :=1
-	MKEXT :=debian
-else
-	MKEXT :=none
-endif
+	ifeq ($(DISTROTEST_DEBIAN),Arch)
+		MKAUTOEXT :=1
+		MKEXT :=arch
+	else ifeq ($(DISTROTEST_DEBIAN),Debian)
+		MKAUTOEXT :=1
+		MKEXT :=debian
+	else
+		MKEXT :=none
+	endif
 endif
 # --- Test root user
 usertest:
