@@ -7,5 +7,5 @@ RUN chmod a+rw -R /mps
 RUN cd /mps/mps-docker && git config pull.ff only && git pull && make install
 USER mps
 WORKDIR /home/mps
-RUN cd /mps/mps-docker && sudo -u mps -i make yay
+RUN cd /mps/ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 ENTRYPOINT ["/bin/bash"]

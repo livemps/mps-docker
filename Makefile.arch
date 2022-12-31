@@ -5,7 +5,7 @@ default: install
 .PHONY: default help install uninstall status yay
 # --- MPS Setup ---#
 MPSUSER :=mps
-PAC_PACKAGES := sudo wget base-devel lsb-release
+PAC_PACKAGES := sudo wget base-devel lsb-release community/go
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 help:
 	@echo ""
@@ -27,6 +27,7 @@ user:
 	@echo '$(MPSUSER):$(MPSUSER)' | chpasswd
 	@echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 yay:
+	@echo "Yes" | sudo pacman --noconfirm -S community/go
 	@git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
 install: user 
