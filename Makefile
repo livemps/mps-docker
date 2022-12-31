@@ -5,6 +5,7 @@ default: install
 # +++++ Environment checks ++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 # --- Early Shells 
 DISTROTEST_DEBIAN := $(shell lsb_release -is)
+DISTROTEST_ARCH := $(shell lsb_release -is)
 SETUPUSER := $(shell id -u)
 # --- Distro test
 DISTRO_DEFAULT  :=debian
@@ -17,6 +18,9 @@ else ifeq ($(DISTRO),debian)
 	MKEXT :=debian
 else
 # --- Check Distro (Auto)
+ifeq ($(DISTROTEST_DEBIAN),Arch)
+	MKAUTOEXT :=1
+	MKEXT :=arch
 ifeq ($(DISTROTEST_DEBIAN),Debian)
 	MKAUTOEXT :=1
 	MKEXT :=debian
