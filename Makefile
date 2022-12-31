@@ -1,20 +1,22 @@
 # +++++ Configuration +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 # --- Makefile Setup ---#
 default: install
-.PHONY: default help install uninstall status distrotest
-# +++++ Distro test +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+.PHONY: default help install uninstall status usertest distrotest
+# +++++ Environment checks ++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+# --- Early Shells 
+DISTROTEST_DEBIAN := $(shell lsb_release -is)
+SETUPUSER := $(shell id -u)
+# --- Distro test
 DISTRO_DEFAULT  :=debian
 DISTRO  ?=$(DISTRO_DEFAULT)
-DISTROTEST_DEBIAN := $(shell lsb_release -is)
-MDIN=$(shell $*)
 MKAUTOEXT:=0
-# --- Check Commandline
+# --- Check Distro (CmdLine)
 ifeq ($(DISTRO),arch)
 	MKEXT :=arch
 else ifeq ($(DISTRO),debian)
 	MKEXT :=debian
 else
-# --- Auto detect
+# --- Check Distro (Auto)
 ifeq ($(DISTROTEST_DEBIAN),Debian)
 	MKAUTOEXT :=1
 	MKEXT :=debian
@@ -22,7 +24,13 @@ else
 	MKEXT :=none
 endif
 endif
-# --- Abort if invalid
+# --- Test root user
+usertest:
+	@echo "USER:$(SETUPUSER)"
+ifneq ($(SETUPUSER),0)
+	$(error No Privileges! Please start as root)
+endif
+# --- Test distro
 distrotest:
 ifeq ($(MKEXT),none)
 	$(error DISTRO not found and auto detection failed!)
@@ -33,7 +41,7 @@ endif
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 help:
 	@echo ""
-	@echo "Usage: "
+	@echo "Usage (As root): "
 	@echo ""
 	@echo "  make [DISTRO=DISTRO] TARGET"
 	@echo "      DISTRO:"
@@ -49,9 +57,9 @@ help:
 	@echo "  Example: make DISTRO=debian install "
 	@echo ""
 # # +++++ Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-install: distrotest
+install: usertest distrotest
 	@make --no-print-directory -f Makefile.$(MKEXT) install
-uninstall: distrotest
+uninstall: usertest distrotest
 	@make --no-print-directory -f Makefile.$(MKEXT) uninstall
-status: distrotest
+status: usertest distrotest
 	@make --no-print-directory -f Makefile.$(MKEXT) status

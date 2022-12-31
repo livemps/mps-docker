@@ -21,7 +21,12 @@ help:
 	@echo ""
 	@echo "  Example: make install"
 	@echo ""
-# +++++ Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+# +++++ Check Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+distrotest:
+ifneq ($(shell id,u),0)
+	$(error No Privileges! Please start as root)
+endif
+# +++++ Installation Targets ++++++++++++++++++++++++++++++++++++++++++++++++++ 
 install: 
 	apt update --yes &&  apt upgrade --yes \
     && apt install --yes $(APT_PACKAGES)
