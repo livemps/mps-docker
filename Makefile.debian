@@ -5,7 +5,8 @@ default: install
 .PHONY: default help install uninstall status
 # --- MPS Setup ---#
 MPSUSER :=mps
-APT_PACKAGES := sudo wget build-essential lsb-release libncurses-dev
+APT_PACKAGES := sudo apt-utils wget curl build-essential \
+				lsb-release libncurses-dev
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 help:
 	@echo ""

@@ -5,7 +5,7 @@ default: install
 .PHONY: default help install uninstall status
 # --- MPS Setup ---#
 MPSUSER :=mps
-PAC_PACKAGES := sudo wget base-devel lsb-release community/go
+PAC_PACKAGES := sudo wget curl base-devel lsb-release community/go
 # +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 help:
 	@echo ""
