@@ -1,0 +1,35 @@
+# +++++ Configuration +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+# --- Makefile Setup ---#
+.ONESHELL:
+default: install
+.PHONY: default help install uninstall status
+# --- Makefile Setup ---#
+MPSUSER :=mps
+APT_PACKAGES := sudo wget build-essential libncurses-dev
+# +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+help:
+	@echo ""
+	@echo "Usage: "
+	@echo ""
+	@echo "  make TARGET"
+	@echo ""
+	@echo "      TARGETS:"
+	@echo "         help      : Help menu"
+	@echo "         install   : Install components"
+	@echo "         uninstall : Uninstall components"
+	@echo "         status    : Current status"
+	@echo ""
+	@echo "  Example: make install"
+	@echo ""
+# +++++ Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+install: 
+	apt update --yes &&  apt upgrade --yes \
+    && apt install --yes $(APT_PACKAGES)
+	useradd -m -d /home/$(MPSUSER) -s /bin/bash -G sudo $(MPSUSER) 
+	adduser mps sudo
+	echo '$(MPSUSER):$(MPSUSER)' | chpasswd
+	echo "$(MPSUSER) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+uninstall: 
+	@echo "No uninstaller"
+status: 
+	@echo "No status"

@@ -1,0 +1,26 @@
+# +++++ Configuration +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+# --- Makefile Setup ---#
+default: help
+.PHONY: default elp install uninstall status
+# +++++ Help ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+help:
+	@echo ""
+	@echo "Usage: "
+	@echo ""
+	@echo "  make TARGET"
+	@echo ""
+	@echo "      TARGETS:"
+	@echo "         help      : Help menu"
+	@echo "         install   : Install components"
+	@echo "         uninstall : Uninstall components"
+	@echo "         status    : Current status"
+	@echo ""
+	@echo "  Example: make install"
+	@echo ""
+# +++++ Targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+install:
+	@echo "Installing vim"
+uninstall: 
+	@echo "Uninstalling vim"
+status: 
+	@echo "Status vim"
