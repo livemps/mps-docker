@@ -1,27 +1,31 @@
 # +++++ Configuration +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 # --- Makefile Setup ---#
 default: install
-.PHONY: default help install uninstall status usertest distrotest
+.PHONY: default help install uninstall status usertest distrotest \
+		docker-clean docker-build docker-create docker-stop docker-start \
+		docker-commit docker-tag docker-push
 # +++++ Environment checks ++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 # --- Early Shells 
 DISTROTEST_DEBIAN := $(shell lsb_release -is)
 DISTROTEST_ARCH := $(shell lsb_release -is)
-SETUPUSER := $(shell id -u)
+DISTRO 		  	?=none
 # --- Check Distro (Auto)
-ifeq ($(DISTROTEST_ARCH),Arch)
+ifeq ($(DISTRO),Arch)
 	MKEXT :=arch
-else ifeq ($(DISTROTEST_DEBIAN),Debian)
+else ifeq ($(DISTRO),Debian)
 	MKEXT :=debian
 else
-	MKEXT :=none
+	ifeq ($(DISTROTEST_ARCH),Arch)
+		MKEXT :=arch
+	else ifeq ($(DISTROTEST_DEBIAN),Debian)
+		MKEXT :=debian
+	else
+		MKEXT :=none
+	endif
 endif
-# --- Test root user
-usertest:
-# ifneq ($(SETUPUSER),0)
-# 	$(error No Privileges! Please start as root)
-# endif
 # --- Test distro
 distrotest:
+	@echo "MKEXT: $(MKEXT)"
 ifeq ($(MKEXT),none)
 	$(error DISTRO not found and auto detection failed!)
 endif
@@ -50,3 +54,22 @@ uninstall: usertest distrotest
 	@make --no-print-directory -f Makefile.$(MKEXT) uninstall
 status: usertest distrotest
 	@make --no-print-directory -f Makefile.$(MKEXT) status
+# +++++ Docker targets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+docker-clean: distrotest
+	-docker rmi mps-min-$(MKEXT)
+	-docker container rm mps-min-$(MKEXT)
+docker-build: distrotest docker-clean
+	docker build -t mps-min-$(MKEXT) . -f Dockerfile.$(MKEXT)
+	docker create --name mps-min-$(MKEXT) mps-min-$(MKEXT)
+docker-stop: distrotest
+	-docker container stop mps-min-$(MKEXT)
+docker-start: distrotest docker-stop docker-build
+	-docker container rm mps-min-$(MKEXT)
+	docker run -it --name mps-min-$(MKEXT) mps-min-$(MKEXT)	
+docker-commit: distrotest
+	docker commit mps-min-$(MKEXT) livemps/mps-min-$(MKEXT):latest
+docker-tag: distrotest
+	docker tag mps-min-$(MKEXT) livemps/mps-min-$(MKEXT):latest
+docker-push: distrotest
+	docker push livemps/mps-min-$(MKEXT):latest
+docker-persist: distrotest docker-build docker-commit docker-tag docker-push
